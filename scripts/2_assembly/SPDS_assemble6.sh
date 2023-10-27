@@ -5,7 +5,7 @@
 #SBATCH --job-name=SPDMainstem
 #SBATCH --time=8:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=12
+#SBATCH --cpus-per-task=24
 
 
 module load spades/3.15.5
@@ -15,8 +15,8 @@ REV_FQ=./all_s2_pe.fastq
 SE_FQ=./all_se.fastq
 OUT_DIR=assembledContigs_redo
 
-free -mh
-getconf _NPROCESSORS_ONLN
+#free -mh
+#getconf _NPROCESSORS_ONLN
 
-$SPADES --meta -1 $FWD_FQ -2 $REV_FQ -s $SE_FQ -o $OUT_DIR --threads 12 --memory 250
+$SPADES --meta -1 $FWD_FQ -2 $REV_FQ -s $SE_FQ -o $OUT_DIR --threads 24 --mem 1000
 
