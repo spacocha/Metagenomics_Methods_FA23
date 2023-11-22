@@ -26,8 +26,8 @@ open (IN, "<${list}") or die "Can't open $list\n";
 while ($file=<IN>){
     chomp ($file);
     next unless ($file);
-    ($prefix)=$file=~/(HJKKLBCX2_[12]_[A-Z]{8}~[A-Z]{8})/;
-    die "MISSING PREFIX: FILE $file PREFIX $prefix\n" unless ($prefix);
+    #($prefix)=$file=~/(HJKKLBCX2_[12]_[A-Z]{8}~[A-Z]{8})/;
+    #die "MISSING PREFIX: FILE $file PREFIX $prefix\n" unless ($prefix);
     $first=1;
     open (IN2, "<${file}") or die "Can't open $file\n";
     while ($line=<IN2>){
@@ -41,11 +41,11 @@ while ($file=<IN>){
 		#die "Field to report $pieces[$field]\n";
 		$first=0;
 	} else {
-		if ($gloc && $prefix){
-			$hash{$gloc}{$prefix}=$pieces[$field];
-			$allprefix{$prefix}++;
+		if ($gloc && $file){
+			$hash{$gloc}{$file}=$pieces[$field];
+			$allprefix{$file}++;
     		} else {
-			die "Missing $gloc or $prefix\n";
+			die "Missing $gloc or $file\n";
 		}
     	}
     }

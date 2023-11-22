@@ -31,19 +31,15 @@ while ($line=<IN>){
 close (IN);
 
 print "Gene_locus\tTotal_Reads\tGene_Length\tFragments Per Kilobase(FPK)\tFragments Per Kilobase Million (FPKM)\n";
-$/=">";
 open (IN, "<${gnfile}") or die "Can't open $gnfile\n";
 while ($line=<IN>){
                 chomp ($line);
                 next unless ($line);
-                ($header, $fragments)=split ("\n", $line);
-                (@pieces)=split (" ", $header);
-		#die "$pieces[4] $pieces[2]\n";
-		($gene)=$pieces[0];
-		$length=$pieces[4]-$pieces[2] + 1;
+                ($contig, $start, $stop, $gene)=split ("\t", $line);
+		$length=$stop-$start + 1;
 		if ($rhash{$gene}){
 			$FPK=1000*$rhash{$gene}/$length;
-			#This isn't normalized by the total number of reads in the library, then mult by 10^6
+			#normalized by the total number of reads in the library, then mult by 10^6
 			$FPKM=1000000*${FPK}/${totalreads};
 			print "$gene\t$rhash{$gene}\t$length\t$FPK\t$FPKM\n";
 		} else {
